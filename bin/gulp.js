@@ -115,9 +115,16 @@ function findLocalGulpPackage(gulpFile){
 }
 
 function loadGulpFile(localGulp, gulpFile, tasks){
-  var gulpFileCwd = path.dirname(gulpFile);
-  process.chdir(gulpFileCwd);
-  gutil.log('Working directory changed to', gutil.colors.magenta(gulpFileCwd));
+  var gulpCwd;
+
+  if (argv.base) {
+    gulpCwd = path.resolve(argv.base);
+  } else {
+    gulpCwd = path.dirname(gulpFile);
+  }
+
+  process.chdir(gulpCwd);
+  gutil.log('Working directory changed to', gutil.colors.magenta(gulpCwd));
 
   var theGulpfile = require(gulpFile);
 
